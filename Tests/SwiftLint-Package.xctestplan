@@ -1,0 +1,63 @@
+{
+  "configurations" : [
+    {
+      "id" : "456FC25A-2401-4D6B-960A-889979A86804",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:",
+      "identifier" : "swiftlint",
+      "name" : "swiftlint"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "CLITests",
+        "name" : "CLITests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "ExtraRulesTests",
+        "name" : "ExtraRulesTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "GeneratedTests",
+        "name" : "GeneratedTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "IntegrationTests",
+        "name" : "IntegrationTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "MacroTests",
+        "name" : "MacroTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "SwiftLintFrameworkTests",
+        "name" : "SwiftLintFrameworkTests"
+      }
+    }
+  ],
+  "version" : 1
+}

@@ -13,6 +13,12 @@ final class AccessibilityLabelForImageRuleGeneratedTests: SwiftLintTestCase {
     }
 }
 
+final class AccessibilityRepresentationForGesturesRuleGeneratedTests: SwiftLintTestCase {
+    func testWithDefaultConfiguration() {
+        verifyRule(AccessibilityRepresentationForGesturesRule.description)
+    }
+}
+
 final class AccessibilityTraitForButtonRuleGeneratedTests: SwiftLintTestCase {
     func testWithDefaultConfiguration() {
         verifyRule(AccessibilityTraitForButtonRule.description)
