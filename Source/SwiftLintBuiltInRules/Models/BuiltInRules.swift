@@ -5,7 +5,7 @@
 public let builtInRules: [any Rule.Type] = [
     AccessibilityLabelForImageRule.self,
     AccessibilityTraitForButtonRule.self,
-    AccessibilityTraitForGesturesRule.self,
+    AccessibilityTraitForGestureRule.self,
     AnonymousArgumentInMultilineClosureRule.self,
     ArrayInitRule.self,
     AttributeNameSpacingRule.self,

@@ -1,7 +1,7 @@
 import SwiftSyntax
 
 @SwiftSyntaxRule
-struct AccessibilityTraitForGesturesRule: OptInRule {
+struct AccessibilityTraitForGestureRule: OptInRule {
     var configuration = SeverityConfiguration<Self>(.warning)
 
     static let description = RuleDescription(
@@ -11,8 +11,8 @@ struct AccessibilityTraitForGesturesRule: OptInRule {
             "or be hidden from accessibility",
         kind: .lint,
         minSwiftVersion: .fiveDotOne,
-        nonTriggeringExamples: AccessibilityTraitForGesturesRuleExamples.nonTriggeringExamples,
-        triggeringExamples: AccessibilityTraitForGesturesRuleExamples.triggeringExamples
+        nonTriggeringExamples: AccessibilityTraitForGestureRuleExamples.nonTriggeringExamples,
+        triggeringExamples: AccessibilityTraitForGestureRuleExamples.triggeringExamples
     )
 
     func makeVisitor(configuration: ConfigurationType, file: SwiftLintFile)
@@ -21,7 +21,7 @@ struct AccessibilityTraitForGesturesRule: OptInRule {
     }
 }
 
-private extension AccessibilityTraitForGesturesRule {
+private extension AccessibilityTraitForGestureRule {
     final class Visitor: ViolationsSyntaxVisitor<ConfigurationType> {
         override func visitPost(_ node: DeclReferenceExprSyntax) {
             // Visitor logic to check for gestures and corresponding accessibility modifiers
@@ -81,14 +81,3 @@ private extension AccessibilityTraitForGesturesRule {
         }
     }
 }
-
-/* Example
- Text("Hello, World!")
-     .gesture(Gesture())
-     .onTapGesture {}
-     .onTapGesture(perform: {})
-     .onLongPressGesture {}
-     .onLongPressGesture(perform: {})
-     .highPriorityGesture(Gesture())
-     .simultaneousGesture(Gesture())
- */

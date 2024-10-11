@@ -19,9 +19,9 @@ final class AccessibilityTraitForButtonRuleGeneratedTests: SwiftLintTestCase {
     }
 }
 
-final class AccessibilityTraitForGesturesRuleGeneratedTests: SwiftLintTestCase {
+final class AccessibilityTraitForGestureRuleGeneratedTests: SwiftLintTestCase {
     func testWithDefaultConfiguration() {
-        verifyRule(AccessibilityTraitForGesturesRule.description)
+        verifyRule(AccessibilityTraitForGestureRule.description)
     }
 }
 

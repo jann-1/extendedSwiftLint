@@ -1,5 +1,7 @@
 accessibility_label_for_image:
   severity: warning
+accessibility_representation_for_gesture:
+  severity: warning
 accessibility_trait_for_button:
   severity: warning
 anonymous_argument_in_multiline_closure:
