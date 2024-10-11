@@ -4,8 +4,8 @@
 /// The rule list containing all available rules built into SwiftLint.
 public let builtInRules: [any Rule.Type] = [
     AccessibilityLabelForImageRule.self,
-    AccessibilityRepresentationForGesturesRule.self,
     AccessibilityTraitForButtonRule.self,
+    AccessibilityTraitForGesturesRule.self,
     AnonymousArgumentInMultilineClosureRule.self,
     ArrayInitRule.self,
     AttributeNameSpacingRule.self,

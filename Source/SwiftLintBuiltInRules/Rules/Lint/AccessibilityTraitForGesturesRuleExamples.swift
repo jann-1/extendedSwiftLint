@@ -5,7 +5,9 @@
 //  Created by Jann‘s AWL Mac on 26.09.2024.
 //
 
-enum AccessibilityRepresentationForGesturesRuleExamples {
+enum AccessibilityTraitForGesturesRuleExamples {
+    // MARK: - nonTriggeringExamples
+
     static let nonTriggeringExamples = [
         // MARK: - .gesture(Gesture())
 
@@ -240,6 +242,8 @@ enum AccessibilityRepresentationForGesturesRuleExamples {
         """),
     ]
 
+    // MARK: - triggeringExamples
+
     static let triggeringExamples = [
         // MARK: - .gesture(Gesture())
 
@@ -247,8 +251,8 @@ enum AccessibilityRepresentationForGesturesRuleExamples {
         Example("""
         struct MyView: View {
             var body: some View {
-                Text("Hello, World!")
-                    ↓.gesture(TapGesture())
+                ↓Text("Hello, World!")
+                    .gesture(TapGesture())
             }
         }
         """),
@@ -259,8 +263,8 @@ enum AccessibilityRepresentationForGesturesRuleExamples {
         Example("""
         struct MyView: View {
             var body: some View {
-                Text("Tap me")
-                    ↓.onTapGesture {
+                ↓Text("Tap me")
+                    .onTapGesture {
                         // Tap action
                     }
             }
@@ -273,8 +277,8 @@ enum AccessibilityRepresentationForGesturesRuleExamples {
         Example("""
         struct MyView: View {
             var body: some View {
-                Text("Tap me")
-                    ↓.onTapGesture(perform: {
+                ↓Text("Tap me")
+                    .onTapGesture(perform: {
                         // Tap action
                     })
             }
@@ -287,8 +291,8 @@ enum AccessibilityRepresentationForGesturesRuleExamples {
         Example("""
         struct MyView: View {
             var body: some View {
-                Text("Long Press me")
-                    ↓.onLongPressGesture {
+                ↓Text("Long Press me")
+                    .onLongPressGesture {
                         // Long press action
                     }
             }
@@ -301,8 +305,8 @@ enum AccessibilityRepresentationForGesturesRuleExamples {
         Example("""
         struct MyView: View {
             var body: some View {
-                Text("Long Press me")
-                    ↓.onLongPressGesture(perform: {
+                ↓Text("Long Press me")
+                    .onLongPressGesture(perform: {
                         // Long press action
                     })
             }
@@ -315,8 +319,8 @@ enum AccessibilityRepresentationForGesturesRuleExamples {
         Example("""
         struct MyView: View {
             var body: some View {
-                Text("Swipe me")
-                    ↓.highPriorityGesture(SwipeGesture())
+                 ↓Text("Swipe me")
+                    .highPriorityGesture(SwipeGesture())
             }
         }
         """),
@@ -327,107 +331,228 @@ enum AccessibilityRepresentationForGesturesRuleExamples {
         Example("""
         struct MyView: View {
             var body: some View {
-                Text("Rotate me")
-                    ↓.simultaneousGesture(RotationGesture())
+                ↓Text("Rotate me")
+                    .simultaneousGesture(RotationGesture())
             }
         }
         """),
     ]
-}
 
+    /*
 
-/* MARK: Not in Use
- static let triggeringExamples = [
-     // MARK: - .gesture(Gesture())
+     static let triggeringExamples = [
+         // MARK: - .gesture(Gesture())
 
-     // Triggering Example without accessibility modifiers
-     Example("""
-     struct MyView: View {
-         var body: some View {
-             ↓Text("Hello, World!")
-                 .gesture(TapGesture())
+         // Triggering Example without accessibility modifiers
+         Example("""
+         struct MyView: View {
+             var body: some View {
+                 ↓Text("Hello, World!")
+                     .gesture(TapGesture())
+                     .padding()
+                     .background(Color.blue)
+             }
          }
-     }
-     """),
+         """),
 
-     // MARK: - .onTapGesture {}
+         Example("""
+         struct MyView: View {
+             var body: some View {
+                 ↓VStack {
+                     Text("Title")
+                     Image(systemName: "star.fill")
+                 }
+                 .gesture(TapGesture())
+                 .frame(width: 200, height: 200)
+                 .border(Color.gray, width: 2)
+             }
+         }
+         """),
 
-     // Triggering Example without accessibility modifiers
-     Example("""
-     struct MyView: View {
-         var body: some View {
-             ↓Text("Tap me")
+         // MARK: - .onTapGesture {}
+
+         // Triggering Example without accessibility modifiers
+         Example("""
+         struct MyView: View {
+             var body: some View {
+                 ↓Text("Tap me")
+                     .onTapGesture {
+                         // Tap action
+                     }
+                     .padding()
+                     .foregroundColor(.red)
+             }
+         }
+         """),
+
+         Example("""
+         struct MyView: View {
+             var body: some View {
+                 ↓HStack {
+                     Text("Item 1")
+                     Text("Item 2")
+                 }
                  .onTapGesture {
                      // Tap action
                  }
+                 .padding()
+                 .background(Color.green)
+             }
          }
-     }
-     """),
+         """),
 
-     // MARK: - .onTapGesture(perform: {})
+         // MARK: - .onTapGesture(perform: {})
 
-     // Triggering Example without accessibility modifiers
-     Example("""
-     struct MyView: View {
-         var body: some View {
-             ↓Text("Tap me")
+         // Triggering Example without accessibility modifiers
+         Example("""
+         struct MyView: View {
+             var body: some View {
+                 ↓Text("Tap me")
+                     .onTapGesture(perform: {
+                         // Tap action
+                     })
+                     .padding()
+                     .background(Color.yellow)
+             }
+         }
+         """),
+
+         Example("""
+         struct MyView: View {
+             var body: some View {
+                 ↓ZStack {
+                     Circle()
+                     Text("Center")
+                 }
                  .onTapGesture(perform: {
                      // Tap action
                  })
+                 .shadow(radius: 5)
+             }
          }
-     }
-     """),
+         """),
 
-     // MARK: - .onLongPressGesture {}
+         // MARK: - .onLongPressGesture {}
 
-     // Triggering Example without accessibility modifiers
-     Example("""
-     struct MyView: View {
-         var body: some View {
-             ↓Text("Long Press me")
+         // Triggering Example without accessibility modifiers
+         Example("""
+         struct MyView: View {
+             var body: some View {
+                 ↓Text("Long Press me")
+                     .onLongPressGesture {
+                         // Long press action
+                     }
+                     .padding()
+                     .background(Color.purple)
+             }
+         }
+         """),
+
+         Example("""
+         struct MyView: View {
+             var body: some View {
+                 ↓HStack {
+                     Image(systemName: "hand.point.up.fill")
+                     Text("Hold me")
+                 }
                  .onLongPressGesture {
                      // Long press action
                  }
+                 .frame(width: 150, height: 100)
+                 .cornerRadius(10)
+             }
          }
-     }
-     """),
+         """),
 
-     // MARK: - .onLongPressGesture(perform: {})
+         // MARK: - .onLongPressGesture(perform: {})
 
-     // Triggering Example without accessibility modifiers
-     Example("""
-     struct MyView: View {
-         var body: some View {
-             ↓Text("Long Press me")
+         // Triggering Example without accessibility modifiers
+         Example("""
+         struct MyView: View {
+             var body: some View {
+                 ↓Text("Long Press me")
+                     .onLongPressGesture(perform: {
+                         // Long press action
+                     })
+                     .padding()
+                     .border(Color.orange, width: 3)
+             }
+         }
+         """),
+
+         Example("""
+         struct MyView: View {
+             var body: some View {
+                 ↓VStack {
+                     Rectangle()
+                         .fill(Color.blue)
+                         .frame(width: 100, height: 50)
+                     Text("Press")
+                 }
                  .onLongPressGesture(perform: {
                      // Long press action
                  })
+                 .opacity(0.8)
+             }
          }
-     }
-     """),
+         """),
 
-     // MARK: - .highPriorityGesture(Gesture())
+         // MARK: - .highPriorityGesture(Gesture())
 
-     // Triggering Example without accessibility modifiers
-     Example("""
-     struct MyView: View {
-         var body: some View {
-              ↓Text("Swipe me")
+         // Triggering Example without accessibility modifiers
+         Example("""
+         struct MyView: View {
+             var body: some View {
+                  ↓Text("Swipe me")
+                     .highPriorityGesture(SwipeGesture())
+                     .padding()
+                     .background(Color.pink)
+             }
+         }
+         """),
+
+         Example("""
+         struct MyView: View {
+             var body: some View {
+                 ↓HStack {
+                     Text("Swipe left")
+                     Text("Swipe right")
+                 }
                  .highPriorityGesture(SwipeGesture())
+                 .border(Color.black, width: 1)
+                 .frame(width: 250, height: 80)
+             }
          }
-     }
-     """),
+         """),
 
-     // MARK: - .simultaneousGesture(Gesture())
+         // MARK: - .simultaneousGesture(Gesture())
 
-     // Triggering Example without accessibility modifiers
-     Example("""
-     struct MyView: View {
-         var body: some View {
-             ↓Text("Rotate me")
+         // Triggering Example without accessibility modifiers
+         Example("""
+         struct MyView: View {
+             var body: some View {
+                 ↓Text("Rotate me")
+                     .simultaneousGesture(RotationGesture())
+                     .padding()
+                     .background(Color.gray)
+             }
+         }
+         """),
+
+         Example("""
+         struct MyView: View {
+             var body: some View {
+                 ↓ZStack {
+                     Image(systemName: "arrow.2.circlepath")
+                     Text("Rotate")
+                 }
                  .simultaneousGesture(RotationGesture())
+                 .scaleEffect(1.2)
+                 .frame(width: 200, height: 200)
+             }
          }
-     }
-     """),
- ]
- */
+         """),
+     ]
+
+      */
+}
