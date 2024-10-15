@@ -9,6 +9,7 @@ let swiftFeatures: [SwiftSetting] = [
     .enableUpcomingFeature("ForwardTrailingClosures"),
     .enableUpcomingFeature("ImplicitOpenExistentials"),
 ]
+let strictConcurrency = [SwiftSetting.enableExperimentalFeature("StrictConcurrency")]
 
 let swiftLintPluginDependencies: [Target.Dependency]
 
@@ -55,12 +56,12 @@ let package = Package(
                 "SwiftLintFramework",
                 "SwiftyTextTable",
             ],
-            swiftSettings: swiftFeatures
+            swiftSettings: swiftFeatures + strictConcurrency
         ),
         .testTarget(
             name: "CLITests",
             dependencies: [
-                "swiftlint"
+                "SwiftLintFramework",
             ],
             swiftSettings: swiftFeatures
         ),
@@ -84,11 +85,12 @@ let package = Package(
         .target(
             name: "SwiftLintBuiltInRules",
             dependencies: ["SwiftLintCore"],
-            swiftSettings: swiftFeatures
+            swiftSettings: swiftFeatures + strictConcurrency
         ),
         .target(
             name: "SwiftLintExtraRules",
-            dependencies: ["SwiftLintCore"]
+            dependencies: ["SwiftLintCore"],
+            swiftSettings: strictConcurrency
         ),
         .target(
             name: "SwiftLintFramework",
@@ -100,7 +102,7 @@ let package = Package(
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 "CollectionConcurrencyKit",
             ],
-            swiftSettings: swiftFeatures
+            swiftSettings: swiftFeatures + strictConcurrency
         ),
         .target(name: "DyldWarningWorkaround"),
         .target(
@@ -155,7 +157,7 @@ let package = Package(
                 .product(name: "SwiftCompilerPlugin", package: "swift-syntax"),
             ],
             path: "Source/SwiftLintCoreMacros",
-            swiftSettings: swiftFeatures
+            swiftSettings: swiftFeatures + strictConcurrency
         ),
         .testTarget(
             name: "MacroTests",
