@@ -24,7 +24,7 @@ In the Shell script field, enter:
 
 ``` bash
 # Define the path to the SwiftLint binary in the derived data folder
-SWIFTLINT_PATH="$BUILD_DIR/../../SourcePackages/artifacts/extendedswiftlint/SwiftLintBinary/SwiftLintBinary-macos.artifactbundle/swiftlint-0.1.0-macos/bin/swiftlint"
+SWIFTLINT_PATH=$(find "$BUILD_DIR/../../SourcePackages/artifacts/extendedswiftlint" -name swiftlint -type f | head -n 1)
 
 # Check if the SwiftLint binary exists and is executable
 if [ -x "$SWIFTLINT_PATH" ]; then
