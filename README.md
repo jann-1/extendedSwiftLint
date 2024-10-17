@@ -40,7 +40,10 @@ The script will search in your derived data the artifacts of the release,
 where the compiled SwiftLint binary resides.  
 It allows you to invoke it when building your app and generates warnings.
 
-## Current List of Rules added
+To add the rules of this Repo to your project, add the identifiers of the 
+rules added to your project. (If they are opt-in)
+
+## Current List of rules added
 
 <!-- Add the identifier and description about your Rule -->
 
