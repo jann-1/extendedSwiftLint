@@ -79,7 +79,7 @@ swift_rules_extra_dependencies()
 http_archive(
     name = "SwiftLint",
     sha256 = "BAZEL_SHA",
-    url = "https://github.com/realm/SwiftLint/releases/download/SWIFTLINT_VERSION/bazel.tar.gz",
+    url = "https://github.com/jann-1/extendedSwiftLint/releases/download/SWIFTLINT_VERSION/bazel.tar.gz",
 )
 
 load("@SwiftLint//bazel:repos.bzl", "swiftlint_repos")

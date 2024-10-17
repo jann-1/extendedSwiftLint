@@ -1,13 +1,12 @@
 //
-//  AccessibilityForCustomGesturesRuleExamples.swift
+//  AccessibilityTFGRuleNTriggeringExamples.swift
 //  SwiftLint
 //
 //  Created by Jann‘s AWL Mac on 26.09.2024.
 //
 
-enum AccessibilityTraitForGestureRuleExamples {
-    // MARK: - nonTriggeringExamples
-
+// This is a really dumb name but it has to be <= 40 char long
+enum AccessibilityTFGRuleNTriggeringExamples {
     static let nonTriggeringExamples = [
         // MARK: - .gesture(Gesture())
 
@@ -33,6 +32,17 @@ enum AccessibilityTraitForGestureRuleExamples {
                     .accessibilityAction {
                         // Accessible tap action
                     }
+            }
+        }
+        """),
+
+        // Non-Triggering Example with .accessibilityHidden
+        Example("""
+        struct MyView: View {
+            var body: some View {
+                Text("Hello, World!")
+                    .gesture(DragGesture())
+                    .accessibilityHidden(true)
             }
         }
         """),
@@ -73,6 +83,19 @@ enum AccessibilityTraitForGestureRuleExamples {
         }
         """),
 
+        // Non-Triggering Example with .accessibilityHidden
+        Example("""
+        struct MyView: View {
+            var body: some View {
+                Text("Tap me")
+                    .onTapGesture {
+                        // Tap action
+                    }
+                    .accessibilityHidden(true)
+            }
+        }
+        """),
+
         // MARK: - .onTapGesture(perform: {})
 
         // Non-Triggering Example with .accessibilityRepresentation
@@ -105,6 +128,19 @@ enum AccessibilityTraitForGestureRuleExamples {
                     .accessibilityAction {
                         // Accessible tap action
                     }
+            }
+        }
+        """),
+
+        // Non-Triggering Example with .accessibilityHidden
+        Example("""
+        struct MyView: View {
+            var body: some View {
+                Text("Tap me")
+                    .onTapGesture(perform: {
+                        // Tap action
+                    })
+                    .accessibilityHidden(true)
             }
         }
         """),
@@ -145,6 +181,19 @@ enum AccessibilityTraitForGestureRuleExamples {
         }
         """),
 
+        // Non-Triggering Example with .accessibilityHidden
+        Example("""
+        struct MyView: View {
+            var body: some View {
+                Text("Long Press me")
+                    .onLongPressGesture {
+                        // Long press action
+                    }
+                    .accessibilityHidden(true)
+            }
+        }
+        """),
+
         // MARK: - .onLongPressGesture(perform: {})
 
         // Non-Triggering Example with .accessibilityRepresentation
@@ -181,6 +230,19 @@ enum AccessibilityTraitForGestureRuleExamples {
         }
         """),
 
+        // Non-Triggering Example with .accessibilityHidden
+        Example("""
+        struct MyView: View {
+            var body: some View {
+                Text("Long Press me")
+                    .onLongPressGesture(perform: {
+                        // Long press action
+                    })
+                    .accessibilityHidden(true)
+            }
+        }
+        """),
+
         // MARK: - .highPriorityGesture(Gesture())
 
         // Non-Triggering Example with .accessibilityRepresentation
@@ -213,6 +275,17 @@ enum AccessibilityTraitForGestureRuleExamples {
         }
         """),
 
+        // Non-Triggering Example with .accessibilityHidden
+        Example("""
+        struct MyView: View {
+            var body: some View {
+                Text("Swipe me")
+                    .highPriorityGesture(SwipeGesture())
+                    .accessibilityHidden(true)
+            }
+        }
+        """),
+
         // MARK: - .simultaneousGesture(Gesture())
 
         // Non-Triggering Example with .accessibilityRepresentation
@@ -240,99 +313,14 @@ enum AccessibilityTraitForGestureRuleExamples {
             }
         }
         """),
-    ]
 
-    // MARK: - triggeringExamples
-
-    static let triggeringExamples = [
-        // MARK: - .gesture(Gesture())
-
-        // Triggering Example without accessibility modifiers
+        // Non-Triggering Example with .accessibilityHidden
         Example("""
         struct MyView: View {
             var body: some View {
-                ↓Text("Hello, World!")
-                    .gesture(TapGesture())
-            }
-        }
-        """),
-
-        // MARK: - .onTapGesture {}
-
-        // Triggering Example without accessibility modifiers
-        Example("""
-        struct MyView: View {
-            var body: some View {
-                ↓Text("Tap me")
-                    .onTapGesture {
-                        // Tap action
-                    }
-            }
-        }
-        """),
-
-        // MARK: - .onTapGesture(perform: {})
-
-        // Triggering Example without accessibility modifiers
-        Example("""
-        struct MyView: View {
-            var body: some View {
-                ↓Text("Tap me")
-                    .onTapGesture(perform: {
-                        // Tap action
-                    })
-            }
-        }
-        """),
-
-        // MARK: - .onLongPressGesture {}
-
-        // Triggering Example without accessibility modifiers
-        Example("""
-        struct MyView: View {
-            var body: some View {
-                ↓Text("Long Press me")
-                    .onLongPressGesture {
-                        // Long press action
-                    }
-            }
-        }
-        """),
-
-        // MARK: - .onLongPressGesture(perform: {})
-
-        // Triggering Example without accessibility modifiers
-        Example("""
-        struct MyView: View {
-            var body: some View {
-                ↓Text("Long Press me")
-                    .onLongPressGesture(perform: {
-                        // Long press action
-                    })
-            }
-        }
-        """),
-
-        // MARK: - .highPriorityGesture(Gesture())
-
-        // Triggering Example without accessibility modifiers
-        Example("""
-        struct MyView: View {
-            var body: some View {
-                 ↓Text("Swipe me")
-                    .highPriorityGesture(SwipeGesture())
-            }
-        }
-        """),
-
-        // MARK: - .simultaneousGesture(Gesture())
-
-        // Triggering Example without accessibility modifiers
-        Example("""
-        struct MyView: View {
-            var body: some View {
-                ↓Text("Rotate me")
+                Text("Rotate me")
                     .simultaneousGesture(RotationGesture())
+                    .accessibilityHidden(true)
             }
         }
         """),
