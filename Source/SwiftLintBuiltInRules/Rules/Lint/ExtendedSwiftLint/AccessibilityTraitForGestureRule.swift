@@ -14,8 +14,8 @@ struct AccessibilityTraitForGestureRule: OptInRule {
             "or be hidden from accessibility",
         kind: .lint,
         minSwiftVersion: .fiveDotOne,
-        nonTriggeringExamples: AccessibilityTFGRuleNTriggeringExamples.nonTriggeringExamples,
-        triggeringExamples: AccessibilityTFGRuleTriggeringExamples.triggeringExamples
+        nonTriggeringExamples: AccessibilityTraitForGestureRuleExamples.nonTriggeringExamples,
+        triggeringExamples: AccessibilityTraitForGestureRuleExamples.triggeringExamples
     )
 
     func makeVisitor(configuration: ConfigurationType, file: SwiftLintFile)
