@@ -1,3 +1,94 @@
+# Extended SwiftLint
+
+This is a fork of the [SwiftLint Repo](https://github.com/realm/SwiftLint).
+
+## How to install
+
+At the moment, installation is only available via XCode Package Manager.
+(Because there is no extendedSwiftLint Pod)
+
+### Via XCode Package Manager
+
+Under XCode > File > Add Package Dependecies, add the GitHub url:
+
+```bash
+https://github.com/jann-1/extendedSwiftLint
+```
+
+Select the version, branch, commit etc. needed and add the package to your project.  
+Add it to your target.
+
+For usage with build phases, well need to add a new run script phase.
+
+In the Shell script field, enter:
+
+``` bash
+# Define the path to the SwiftLint binary in the derived data folder
+SWIFTLINT_PATH="$BUILD_DIR/../../SourcePackages/artifacts/extendedswiftlint/SwiftLintBinary/SwiftLintBinary-macos.artifactbundle/swiftlint-0.1.0-macos/bin/swiftlint"
+
+# Check if the SwiftLint binary exists and is executable
+if [ -x "$SWIFTLINT_PATH" ]; then
+    # Run SwiftLint on the project source directory
+    "$SWIFTLINT_PATH" lint "$SRCROOT"
+else
+    echo "warning: SwiftLint binary not found at $SWIFTLINT_PATH"
+    echo "Current BUILD_DIR dir is: $BUILD_DIR" 
+fi
+```
+
+The script will search in your derived data the artifacts of the release,
+where the compiled SwiftLint binary resides.  
+It allows you to invoke it when building your app and generates warnings.
+
+## Current List of Rules added
+
+<!-- Add the identifier and description about your Rule -->
+
+### accessibility_representation_for_gesture
+
+All Views with gestures should include an accessibility representation, action or be hidden from accessibility.
+
+<!-- Add meta data about your Rule -->
+
+| identifier  | type | violation type | minSwiftVersion |
+| --- | --- | --- | --- |
+| accessibility_representation_for_gesture | .lint | .warning | .fiveDotOne |
+
+## Contribute
+
+Feel free to write more SwiftLint Rules, preferably with a SwiftSyntaxRule.  
+Also if some rules can or need to be improved, dont hesitate :\)
+
+Please use branches and Pull Requests.  
+If the fork can be synced, or a new release was published, update the fork accordingly.
+
+For more information about how to build locally, how to create test etc. see [CONTRIBUTING](CONTRIBUTING.md)
+
+### Creating a new version
+
+1. Build your app locally and run all tests (they must succeed)
+
+2. In your terminal, navigate into the repo and run. \
+  Replace `<version>` with your new version and `<swiftLintVersion>` with the SwiftLint version
+
+    ``` bash
+    make release "<version>: with SwiftLint v<swiftLintVersion>"
+    ```
+
+3. Check Github and if there is a new Release, you can celebrate :\]
+
+### TODO List
+
+- [ ] Create a solution similar to [SwiftLintPlugins](https://github.com/SimplyDanny/SwiftLintPlugins)  
+  so only the neeeded binary has to be consumed, and not the whole SwiftLint Repo
+- [ ] Create a Pod, so the usage is more flexible
+- [ ] Update README for usage with SPM
+
+> [!NOTE]  
+> Below is the README of the official SwiftLint.
+
+---
+
 # SwiftLint
 
 A tool to enforce Swift style and conventions, loosely based on the now
