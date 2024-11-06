@@ -15,6 +15,7 @@ extension Configuration {
         case analyzerRules = "analyzer_rules"
         case allowZeroLintableFiles = "allow_zero_lintable_files"
         case strict = "strict"
+        case lenient = "lenient"
         case baseline = "baseline"
         case writeBaseline = "write_baseline"
         case checkForUpdates = "check_for_updates"
@@ -42,7 +43,7 @@ extension Configuration {
         dict: [String: Any],
         ruleList: RuleList = RuleRegistry.shared.list,
         enableAllRules: Bool = false,
-        onlyRule: String? = nil,
+        onlyRule: [String] = [],
         cachePath: String? = nil
     ) throws {
         func defaultStringArray(_ object: Any?) -> [String] { [String].array(of: object) ?? [] }
@@ -66,7 +67,7 @@ extension Configuration {
             allRulesWrapped = try ruleList.allRulesWrapped(configurationDict: dict)
         } catch let RuleListError.duplicatedConfigurations(ruleType) {
             let aliases = ruleType.description.deprecatedAliases.map { "'\($0)'" }.joined(separator: ", ")
-            let identifier = ruleType.description.identifier
+            let identifier = ruleType.identifier
             throw Issue.genericWarning(
                 "Multiple configurations found for '\(identifier)'. Check for any aliases: \(aliases)."
             )
@@ -81,7 +82,7 @@ extension Configuration {
             analyzerRules: analyzerRules
         )
 
-        if onlyRule == nil {
+        if onlyRule.isEmpty {
             Self.validateConfiguredRulesAreEnabled(
                 parentConfiguration: parentConfiguration,
                 configurationDictionary: dict,
@@ -103,6 +104,7 @@ extension Configuration {
             pinnedVersion: dict[Key.swiftlintVersion.rawValue].map { ($0 as? String) ?? String(describing: $0) },
             allowZeroLintableFiles: dict[Key.allowZeroLintableFiles.rawValue] as? Bool ?? false,
             strict: dict[Key.strict.rawValue] as? Bool ?? false,
+            lenient: dict[Key.lenient.rawValue] as? Bool ?? false,
             baseline: dict[Key.baseline.rawValue] as? String,
             writeBaseline: dict[Key.writeBaseline.rawValue] as? String,
             checkForUpdates: dict[Key.checkForUpdates.rawValue] as? Bool ?? false
@@ -174,12 +176,12 @@ extension Configuration {
             }
 
             switch rulesMode {
-            case .allEnabled:
+            case .allCommandLine, .onlyCommandLine:
                 return
-            case .only(let onlyRules):
+            case .onlyConfiguration(let onlyRules):
                 let issue = validateConfiguredRuleIsEnabled(onlyRules: onlyRules, ruleType: ruleType)
                 issue?.print()
-            case let .default(disabled: disabledRules, optIn: optInRules):
+            case let .defaultConfiguration(disabled: disabledRules, optIn: optInRules):
                 let issue = validateConfiguredRuleIsEnabled(
                     parentConfiguration: parentConfiguration,
                     disabledRules: disabledRules,
@@ -201,9 +203,11 @@ extension Configuration {
         var disabledInParentRules: Set<String> = []
         var allEnabledRules: Set<String> = []
 
-        if case .only(let onlyRules) = parentConfiguration?.rulesMode {
+        if case .onlyConfiguration(let onlyRules) = parentConfiguration?.rulesMode {
             enabledInParentRules = onlyRules
-        } else if case .default(let parentDisabledRules, let parentOptInRules) = parentConfiguration?.rulesMode {
+        } else if case .defaultConfiguration(
+            let parentDisabledRules, let parentOptInRules
+        ) = parentConfiguration?.rulesMode {
             enabledInParentRules = parentOptInRules
             disabledInParentRules = parentDisabledRules
         }
@@ -243,7 +247,7 @@ extension Configuration {
         allEnabledRules: Set<String>,
         ruleType: any Rule.Type
     ) -> Issue? {
-        if case .allEnabled = parentConfiguration?.rulesMode {
+        if case .allCommandLine = parentConfiguration?.rulesMode {
             if disabledRules.contains(ruleType.identifier) {
                 return Issue.ruleDisabledInDisabledRules(ruleID: ruleType.identifier)
             }
@@ -264,7 +268,7 @@ extension Configuration {
                 if enabledInParentRules.union(optInRules).isDisjoint(with: allIdentifiers) {
                     return Issue.ruleNotEnabledInOptInRules(ruleID: ruleType.identifier)
                 }
-            } else if case .only(let enabledInParentRules) = parentConfiguration?.rulesMode,
+            } else if case .onlyConfiguration(let enabledInParentRules) = parentConfiguration?.rulesMode,
                       enabledInParentRules.isDisjoint(with: allIdentifiers) {
                 return Issue.ruleNotEnabledInParentOnlyRules(ruleID: ruleType.identifier)
             }

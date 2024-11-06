@@ -52,7 +52,7 @@ public let allRuleIdentifiers = Set(RuleRegistry.shared.list.list.keys)
 public extension Configuration {
     func applyingConfiguration(from example: Example) -> Configuration {
         guard let exampleConfiguration = example.configuration,
-           case let .only(onlyRules) = self.rulesMode,
+           case let .onlyConfiguration(onlyRules) = self.rulesMode,
            let firstRule = (onlyRules.first { $0 != "superfluous_disable_command" }),
            case let configDict: [_: any Sendable] = ["only_rules": onlyRules, firstRule: exampleConfiguration],
            let typedConfiguration = try? Configuration(dict: configDict) else { return self }
@@ -272,7 +272,7 @@ private extension String {
 public func makeConfig(_ ruleConfiguration: Any?,
                        _ identifier: String,
                        skipDisableCommandTests: Bool = false) -> Configuration? {
-    let superfluousDisableCommandRuleIdentifier = SuperfluousDisableCommandRule.description.identifier
+    let superfluousDisableCommandRuleIdentifier = SuperfluousDisableCommandRule.identifier
     let identifiers: Set<String> = skipDisableCommandTests ? [identifier]
         : [identifier, superfluousDisableCommandRuleIdentifier]
 
@@ -281,12 +281,12 @@ public func makeConfig(_ ruleConfiguration: Any?,
         return (try? ruleType.init(configuration: ruleConfiguration)).flatMap { configuredRule in
             let rules = skipDisableCommandTests ? [configuredRule] : [configuredRule, SuperfluousDisableCommandRule()]
             return Configuration(
-                rulesMode: .only(identifiers),
+                rulesMode: .onlyConfiguration(identifiers),
                 allRulesWrapped: rules.map { ($0, false) }
             )
         }
     }
-    return Configuration(rulesMode: .only(identifiers))
+    return Configuration(rulesMode: .onlyConfiguration(identifiers))
 }
 
 private func testCorrection(_ correction: (Example, Example),
@@ -299,8 +299,8 @@ private func testCorrection(_ correction: (Example, Example),
 #endif
     var config = configuration
     if let correctionConfiguration = correction.0.configuration,
-        case let .only(onlyRules) = configuration.rulesMode,
-        let ruleToConfigure = (onlyRules.first { $0 != SuperfluousDisableCommandRule.description.identifier }),
+        case let .onlyConfiguration(onlyRules) = configuration.rulesMode,
+        let ruleToConfigure = (onlyRules.first { $0 != SuperfluousDisableCommandRule.identifier }),
         case let configDict: [_: any Sendable] = ["only_rules": onlyRules, ruleToConfigure: correctionConfiguration],
         let typedConfiguration = try? Configuration(dict: configDict) {
         config = configuration.merged(withChild: typedConfiguration, rootDirectory: configuration.rootDirectory)
@@ -425,7 +425,7 @@ public extension XCTestCase {
 
             for trigger in disabledTriggers {
                 let violationsPartitionedByType = makeViolations(trigger)
-                    .partitioned { $0.ruleIdentifier == SuperfluousDisableCommandRule.description.identifier }
+                    .partitioned { $0.ruleIdentifier == SuperfluousDisableCommandRule.identifier }
 
                 XCTAssert(violationsPartitionedByType.first.isEmpty,
                           "Violation(s) still triggered although rule was disabled",

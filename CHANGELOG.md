@@ -16,12 +16,33 @@
   [Jordan Rose](https://github.com/jrose-signal)
   [SimplyDanny](https://github.com/SimplyDanny)
 
+* Support reading files to lint from Input File Lists provided
+  by Run Script Build Phases in Xcode using the command-line
+  argument `--use-script-input-file-lists`.  
+  [BlueVirusX](https://github.com/BlueVirusX)
+
+* Adds a `lenient` configuration file setting, equivalent to the `--lenient`
+  command line option.  
+  [Martin Redington](https://github.com/mildm8nnered)
+  [#5801](https://github.com/realm/SwiftLint/issues/5801)
+
 #### Bug Fixes
 
 * Run command plugin in whole package if no targets are defined in the
   package manifest.  
   [SimplyDanny](https://github.com/SimplyDanny)
   [#5787](https://github.com/realm/SwiftLint/issues/5787)
+
+* Do not trigger `self_in_property_initialization` rule on `self` in
+  key paths expressions.  
+  [SimplyDanny](https://github.com/SimplyDanny)
+  [#5835](https://github.com/realm/SwiftLint/issues/5835)
+
+* Allow to specify transitive modules to be taken into account by
+  `unused_import` rule. This avoids that required imports are removed.  
+  [Paul Taykalo](https://github.com/PaulTaykalo)
+  [SimplyDanny](https://github.com/SimplyDanny)
+  [#5167](https://github.com/realm/SwiftLint/issues/5167)
 
 * Do not throw deprecation warning if deprecated property is not
   presented in configuration.  
@@ -37,6 +58,15 @@
   false positives for nested disable commands for custom rules.  
   [Martin Redington](https://github.com/mildm8nnered)
   [#5788](https://github.com/realm/SwiftLint/issues/5788)
+
+* Fixes the `--only-rule` command line option, when a default `.swiftlint.yml`
+  is absent. Additionally rules specified with `--only-rule` on the command
+  line can now be disabled in a child configuration, to allow specific
+  directories to be excluded from the rule (or from being auto-corrected by
+  the rule), and `--only-rule` can now be specified multiple times
+  to run multiple rules.  
+  [Martin Redington](https://github.com/mildm8nnered)
+  [#5711](https://github.com/realm/SwiftLint/issues/5711)
 
 ## 0.57.0: Squeaky Clean Cycle
 
