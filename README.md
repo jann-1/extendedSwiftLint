@@ -16,7 +16,7 @@ https://github.com/jann-1/extendedSwiftLint
 ```
 
 Select the version, branch, commit etc. needed and add the package to your project.  
-Add it to your target.
+You do not have to add the framework or the library to your target if you only want linting in your build phases. 
 
 For usage with build phases, well need to add a new run script phase.
 
